@@ -1,18 +1,47 @@
 <!DOCTYPE html>
 <html lang="en-US">
+	<head>
+		<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	</head>
 	<body ng-app="livecode">
 		<div ng-controller="MainController">
 		 	<h1>{{message}}</h1>
+		 	<h2>{{yourName}}</h2>
 
 		 	<button ng-click="respond()">Respond!</button>
 
-		 	<button ng-hide="showTypeName" ng-click="showTypeNameWindow()">Type your name</button>
+		 	<button ng-show="!showTypeName" ng-click="showTypeNameWindow()">Type your name</button>
 		 	<div ng-show="showTypeName">
-		 		<input type="text" ng-model="yourName">
+		 		<input type="text" ng-model="yourName" value="">
 		 		<button ng-click="showName()">Alert Your Name!</button>
 		 	</div>
+
+		 	<h1>Here is the Inventory:</h1>
+
+		 	<div class="container">
+			 	<div class="row">
+			 		<div class="col-sm-4" ng-repeat="pizza in inventory track by $index">
+						<div class="panel panel-default" ng-class="{'panel-danger':pizza.amount <= 0}">
+							<div class="panel-heading">
+								<h3 class="panel-title">{{pizza.name}}</h3>
+							</div>
+							<div class="panel-body">
+								<h4 class="text-center">${{pizza.price}}</h4>
+								<p class="text-center" ng-show="pizza.isDelivered">Pickup/Delivery</p>
+								<p class="text-center" ng-show="!pizza.isDelivered">Pickup Only</p>
+
+								<h2 class="text-center" ng-show="pizza.amount <= 0"><span class="label label-danger">Sold Out</span></h2>
+
+								<button class="btn btn-block btn-success" ng-hide="pizza.amount <= 0" ng-click="purchasePizza(pizza)">Purchase!</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 		<script src="app.js"></script>
 		<script src="controllers/main.js"></script>
